@@ -20,9 +20,16 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     json_new_user = json.dumps(new_user, indent=4)
 
     registro_nuevos = -1002238369077 #ID Del canal donde se enviará la información y se almacenará
-
-    await context.bot.send_message(chat_id = registro_nuevos, text = json_new_user, parse_mode = ParseMode.HTML)
-
+    try:
+        await context.bot.send_message(chat_id = registro_nuevos, text = json_new_user, parse_mode = ParseMode.HTML)
+    except Exception as e:
+            await context.bot.send_message(
+                chat_id=-1002261484062,
+                text=f"No se envió el mensaje al canal {i}. Error: {str(e)}",
+                parse_mode=ParseMode.HTML,
+                disable_web_page_preview=True
+            )
+        
 async def ayuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton('Solicita más ayuda', url = "https://ayuda.com")],[InlineKeyboardButton('📤 ASISTENCIA PERSONALIZADA 🆘', url = "https://t.me/AyudaAdmin")]])
